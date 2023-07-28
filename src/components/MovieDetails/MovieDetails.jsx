@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Link, Route, Routes, useParams, useLocation } from 'react-router-dom';
 import { MoviesApi } from 'services/api';
 import {
@@ -15,7 +15,7 @@ function MovieDetails() {
   const [movie, setMovie] = useState(null);
 
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/';
+  const backLinkLocationRef = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     if (!movieID) return;
@@ -35,7 +35,7 @@ function MovieDetails() {
     <>
       {movie && (
         <StyledMovieDetails>
-          <Link to={backLinkHref}>Go back</Link>
+          <Link to={backLinkLocationRef.current}>Go back</Link>
           <StyledMovieWrap>
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
