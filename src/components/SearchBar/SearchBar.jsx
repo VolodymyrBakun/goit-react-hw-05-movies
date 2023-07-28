@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { StyledSearchBar, StyledSearchBarForm } from './StyledSearchBar';
 
 export function SearchBar({ onSearch }) {
   const onSearchSubmit = e => {
@@ -7,15 +8,15 @@ export function SearchBar({ onSearch }) {
   };
 
   return (
-    <>
-      <form onSubmit={onSearchSubmit}>
+    <StyledSearchBar>
+      <StyledSearchBarForm onSubmit={onSearchSubmit}>
         <input name="searchValue" />
         <button>Search</button>
-      </form>
-    </>
+      </StyledSearchBarForm>
+    </StyledSearchBar>
   );
-};
+}
 
 SearchBar.propTypes = {
-  onSubmit: PropTypes.func.isRequired
-}
+  onSubmit: PropTypes.func,
+};

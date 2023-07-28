@@ -3,16 +3,14 @@ import { MoviesApi } from 'services/api';
 import { MovieList } from 'components/MovieList/MovieList';
 
 const HomePage = () => {
-    const [trendingMovies, setTrandingMovies] = useState(null);
-
+  const [trendingMovies, setTrandingMovies] = useState(null);
 
   useEffect(() => {
     const getMovieData = async () => {
       const MovieData = await MoviesApi.fetchMovies();
-      setTrandingMovies(MovieData.data.results)
-    
+      setTrandingMovies(MovieData.data.results);
     };
-      getMovieData();
+    getMovieData();
   }, []);
 
   return (

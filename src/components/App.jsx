@@ -1,19 +1,20 @@
-import { Route, Routes, NavLink } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { Route, Routes, NavLink } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { StyledHeader, StyledNav } from './Styled';
 
 const LazyHomePage = lazy(() => import('pages/HomePage'));
 const LazyMovies = lazy(() => import('pages/Movies'));
-const LazyMovieDetails = lazy(() => import('./MovieDetails/MovieDetails'))
+const LazyMovieDetails = lazy(() => import('./MovieDetails/MovieDetails'));
 
 const App = () => {
   return (
     <div>
-      <header>
-        <nav>
+      <StyledHeader>
+        <StyledNav>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/movies">Movies</NavLink>
-        </nav>
-      </header>
+        </StyledNav>
+      </StyledHeader>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<LazyHomePage />} />

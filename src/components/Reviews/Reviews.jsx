@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MoviesApi } from 'services/api';
+import { StyledReviews } from './StyledReviews';
 
 function Reviews() {
   const [reviews, setReviews] = useState(null);
@@ -22,7 +23,7 @@ function Reviews() {
   return (
     <>
       {reviews && (
-        <ul>
+        <StyledReviews>
           {reviews.length === 0 && (
             <li>We don't have any reviews for this movie</li>
           )}
@@ -33,7 +34,7 @@ function Reviews() {
                 <p>Character: {review.content}</p>
               </li>
             ))}
-        </ul>
+        </StyledReviews>
       )}
     </>
   );

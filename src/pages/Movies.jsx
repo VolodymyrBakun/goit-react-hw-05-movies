@@ -23,12 +23,11 @@ const Movies = () => {
     };
     fetchSearchedMovies();
   }, [movieName, searchedMovies]);
-    
-     const updateQueryString = name => {
-       const nextParams =
-         name !== '' ? { movie: name } : {};
-       setSearchParams(nextParams);
-     };
+
+  const updateQueryString = name => {
+    const nextParams = name !== '' ? { movie: name } : {};
+    setSearchParams(nextParams);
+  };
 
   return (
     <>
