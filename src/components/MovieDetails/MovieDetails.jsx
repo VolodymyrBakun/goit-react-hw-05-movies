@@ -1,12 +1,17 @@
-import  Cast  from 'components/Cast/Cast';
-import Reviews from 'components/Reviews/Reviews';
-import { useEffect, useState } from 'react';
-import { Link, Route, Routes, useParams } from 'react-router-dom';
+import { Suspense, lazy, useEffect, useState } from 'react';
+import { Link, Route, Routes, useParams, useLocation } from 'react-router-dom';
 import { MoviesApi } from 'services/api';
 
-export function MovieDetails() {
+const LazyCast = lazy(() => import('components/Cast/Cast'));
+const LazyReviews = lazy(() => import('components/Reviews/Reviews'));
+
+ function MovieDetails() {
   const { movieID } = useParams();
-  const [movie, setMovie] = useState(null);
+    const [movie, setMovie] = useState(null);
+    
+    const location = useLocation();
+    const backLinkHref = location.state?.from ?? '/';
+
 
   useEffect(() => {
     if (!movieID) return;
@@ -26,6 +31,7 @@ export function MovieDetails() {
     <>
       {movie && (
         <div>
+          <Link to={backLinkHref}>Go back</Link>
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
@@ -52,12 +58,16 @@ export function MovieDetails() {
             <Link to="cast">Cast</Link>
             <Link to="revievs">Revievs</Link>
           </div>
-          <Routes>
-            <Route path="cast" element={<Cast/>} />
-            <Route path="revievs" element={<Reviews/>} />
-          </Routes>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="cast" element={<LazyCast />} />
+              <Route path="revievs" element={<LazyReviews />} />
+            </Routes>
+          </Suspense>
         </div>
       )}
     </>
   );
-}
+};
+
+export default MovieDetails;

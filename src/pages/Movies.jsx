@@ -1,23 +1,41 @@
-import { useState, useEffect } from "react";
-import { SearchBar } from "components/SearchBar/SearchBar";
-import { MovieList } from "components/MovieList/MovieList";
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { MoviesApi } from 'services/api';
+
+import { SearchBar } from 'components/SearchBar/SearchBar';
+import { MovieList } from 'components/MovieList/MovieList';
 
 const Movies = () => {
-    const [query, setQuery] = useState(null);
-    const [searchedMovies, setSearchedMovies] = useState(null)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchedMovies, setSearchedMovies] = useState(null);
+  const movieName = searchParams.get('movie') ?? '';
 
-    useEffect(() => {
-        if (query) {
-            
-        }
-    },[query])
+  useEffect(() => {
+    if (!movieName) return setSearchedMovies(null);
 
-    return (
-        <>
-            <SearchBar onSearch={setQuery} />
-            {/* {query && <MovieList movies={searchedMovies} />} */}
-        </>
-)
+    const fetchSearchedMovies = async () => {
+      try {
+        const searchedData = await MoviesApi.fetchMovieByQuery(movieName);
+        setSearchedMovies(searchedData.data.results);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchSearchedMovies();
+  }, [movieName, searchedMovies]);
+    
+     const updateQueryString = name => {
+       const nextParams =
+         name !== '' ? { movie: name } : {};
+       setSearchParams(nextParams);
+     };
+
+  return (
+    <>
+      <SearchBar onSearch={updateQueryString} />
+      {searchedMovies && <MovieList movies={searchedMovies} />}
+    </>
+  );
 };
 
-export default Movies
+export default Movies;
