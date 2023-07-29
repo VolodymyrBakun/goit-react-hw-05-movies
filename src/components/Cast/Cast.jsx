@@ -24,6 +24,9 @@ function Cast() {
     <>
       {casts && (
         <StyledCast>
+          {casts.length === 0 && (
+            <li>We don't have any data for this movie</li>
+          )}
           {casts.map(cast => (
             <StyledCastItem className="cast-item" key={cast.id}>
               <img

@@ -1,5 +1,5 @@
-import { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import { Link, Route, Routes, useParams, useLocation } from 'react-router-dom';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
 import { MoviesApi } from 'services/api';
 import {
   StyledMovieDetails,
@@ -7,8 +7,8 @@ import {
   StyledAdditionalInfoLinks,
 } from './StyledMovieDetails';
 
-const LazyCast = lazy(() => import('components/Cast/Cast'));
-const LazyReviews = lazy(() => import('components/Reviews/Reviews'));
+// const LazyCast = lazy(() => import('components/Cast/Cast'));
+// const LazyReviews = lazy(() => import('components/Reviews/Reviews'));
 
 function MovieDetails() {
   const { movieID } = useParams();
@@ -66,10 +66,7 @@ function MovieDetails() {
             </StyledAdditionalInfoLinks>
           </div>
           <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              <Route path="cast" element={<LazyCast />} />
-              <Route path="revievs" element={<LazyReviews />} />
-            </Routes>
+            <Outlet />
           </Suspense>
         </StyledMovieDetails>
       )}

@@ -4,7 +4,10 @@ import { StyledHeader, StyledNav } from './Styled';
 
 const LazyHomePage = lazy(() => import('pages/HomePage'));
 const LazyMovies = lazy(() => import('pages/Movies'));
-const LazyMovieDetails = lazy(() => import('./MovieDetails/MovieDetails'));
+const LazyMovieDetails = lazy(() => import('../pages/MovieDetails/MovieDetails'));
+const LazyCast = lazy(() => import('components/Cast/Cast'));
+const LazyReviews = lazy(() => import('components/Reviews/Reviews'));
+
 
 const App = () => {
   return (
@@ -19,8 +22,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LazyHomePage />} />
           <Route path="/movies" element={<LazyMovies />} />
-          <Route path="/movies/:movieID/*" element={<LazyMovieDetails />} />
-
+          <Route path="/movies/:movieID/*" element={<LazyMovieDetails />}>
+              <Route path="cast" element={<LazyCast />} />
+              <Route path="revievs" element={<LazyReviews />} />
+          </Route>
           <Route path="*" element={<LazyHomePage />} />
         </Routes>
       </Suspense>
