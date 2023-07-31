@@ -1,4 +1,4 @@
-import { Route, Routes, NavLink } from 'react-router-dom';
+import { Route, Routes, NavLink, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { StyledHeader, StyledNav } from './Styled';
 
@@ -26,7 +26,7 @@ const App = () => {
               <Route path="cast" element={<LazyCast />} />
               <Route path="revievs" element={<LazyReviews />} />
           </Route>
-          <Route path="*" element={<LazyHomePage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
     </div>
